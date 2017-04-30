@@ -3,6 +3,8 @@ import Parse from 'parse/node';
 const maslenica = require('./maslenica.json');
 const teplica = require('./teplica.json');
 const pizzaBlues = require('./pizza-blues.json');
+const faqJson = require('./faq.json');
+const notifJson = require('./notification.json');
 
 const SERVER_PORT = process.env.PORT || 8080;
 const SERVER_URL = process.env.SERVER_URL || 'http://localhost';
@@ -45,11 +47,54 @@ async function importClass(data) {
   }
 }
 
+async function importFaq(data) {
+  console.log('Loading Faq');
+  const Faq = Parse.Object.extend('Faq');
+
+  console.log('Cleaning old', 'faq');
+
+  await new Parse.Query(Faq)
+    .each(record => record.destroy());
+
+  for (var i = 0; i < data.length; i++) {
+    var p = data[i];
+    let pObj = new Faq();
+    pObj.set('answer', p.answer);
+    pObj.set('question', p.question);
+    pObj = await pObj.save();
+  }
+}
+
+async function importNotification(data) {
+  console.log('Loading Notification');
+  const Notification = Parse.Object.extend('Notification');
+
+  console.log('Cleaning old', 'Notification');
+
+  await new Parse.Query(Notification)
+    .each(record => record.destroy());
+
+  for (var i = 0; i < data.length; i++) {
+    var p = data[i];
+    let pObj = new Notification();
+    pObj.set('text', p.text);
+    if (p.url) {
+       pObj.set('text', p.text);
+    }
+    if (p.image) {
+       pObj.set('image', p.image);
+    }
+    pObj = await pObj.save();
+  }
+}
+
 async function main() {
   await Promise.all([
     importClass(maslenica),
     importClass(teplica),
     importClass(pizzaBlues),
+    importFaq(faqJson),
+    importNotification(notifJson),
   ]);
   return 'OK';
 }
