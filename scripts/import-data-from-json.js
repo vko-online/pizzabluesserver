@@ -7,7 +7,7 @@ const pizzaBlues = require('./pizza-blues.json');
 const SERVER_PORT = process.env.PORT || 8080;
 
 Parse.initialize('oss-f8-app-2016');
-Parse.serverURL = `http://localhost:${SERVER_PORT}/parse`;
+Parse.serverURL = `https://paul-server.herokuapp.com:${SERVER_PORT}/parse`;
 
 
 async function importClass(data) {
