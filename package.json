@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "start": "babel-node ./server/server.js",
-    "postinstall": "npm run import-json",
     "import-json": "babel-node ./scripts/import-data-from-json.js",
     "lint": "eslint ."
   },
