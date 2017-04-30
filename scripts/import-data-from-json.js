@@ -19,11 +19,12 @@ async function importClass(data) {
   const Product = Parse.Object.extend('Product');
 
   console.log('Cleaning old', 'store, product', 'data');
-
-  await new Parse.Query(Store)
-    .each(record => record.destroy());
   await new Parse.Query(Product)
     .each(record => record.destroy());
+    
+  await new Parse.Query(Store)
+    .each(record => record.destroy());
+  
 
   let sObj = new Store();
   sObj.set('title', data.title);
