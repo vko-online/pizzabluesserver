@@ -8,7 +8,7 @@ const SERVER_PORT = process.env.PORT || 8080;
 const SERVER_URL = process.env.SERVER_URL || 'http://localhost';
 
 Parse.initialize('oss-f8-app-2016');
-Parse.serverURL = `${SERVER_URL}:${SERVER_PORT}/parse`;
+Parse.serverURL = 'http://paul-server.herokuapp.com/parse' //`${SERVER_URL}:${SERVER_PORT}/parse`;
 
 
 async function importClass(data) {
